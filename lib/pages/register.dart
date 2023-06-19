@@ -26,12 +26,12 @@ class _RegisterState extends State<Register> {
                     height: 45.0,
                   ),
                   const Text(
-                    'Wlcome to this site',
+                    'Create Acount',
                     style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        letterSpacing: 2),
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -56,9 +56,7 @@ class _RegisterState extends State<Register> {
                       ),
                       TextButton(
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                          }
-                         
+                          if (_formKey.currentState!.validate()) {}
                         },
                         child: Text('Submit'),
                       ),
