@@ -16,6 +16,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.green[50],
       appBar: AppBar(
         title: buildSearchField(),
@@ -42,7 +43,7 @@ class _HomeState extends State<Home> {
           Icon(Icons.notification_add_rounded),
         ],
       ),
-      drawer:Navigation_drawor(), 
+      drawer: Navigation_drawor(),
       body: Listt(),
       floatingActionButton: TextButton(
           onPressed: () {
@@ -61,11 +62,11 @@ class _HomeState extends State<Home> {
               size: 30,
               color: Colors.white,
             ),
-          )),
+          )
+          ),
     );
   }
 }
-
 
 Widget buildSearchField() {
   final color = Colors.white;

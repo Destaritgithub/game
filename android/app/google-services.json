@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "867920825705",
+    "project_id": "game-79c97",
+    "storage_bucket": "game-79c97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867920825705:android:c30f23a736247aac6881f8",
+        "android_client_info": {
+          "package_name": "com.manyawkal.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867920825705-n6bu46vtlab8rlhvkjveluvednm06e9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZYi3NE4fqumfmG58wkRFq49PXrN7jqjI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867920825705-n6bu46vtlab8rlhvkjveluvednm06e9c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
