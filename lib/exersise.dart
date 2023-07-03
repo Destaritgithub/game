@@ -1,98 +1,117 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:game/function/authfunction.dart';
 
-class Exc extends StatelessWidget {
-  List<String> fruits = ['Orange', 'Apple', 'Mango', 'Banana'];
-  Map fruits_person = {
-    'fruits': ['Orange', 'Apple', 'Mango', 'Banana'],
-    'names': ['Karan', 'Akshit', 'Gaurav', 'Aasif']
-  };
+class Exc extends StatefulWidget {
+  @override
+  State<Exc> createState() => _ExcState();
+}
 
+class _ExcState extends State<Exc> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isMember = false;
+  String email = '';
+  String password = '';
+  String userName = '';
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text('Excersise'),
         centerTitle: true,
       ),
-      body:Column(
-        children: [
-          playingOption('first one', 3, 7, 100, width),
-          SizedBox(height: 2,),
-          playingOption('first one', 3, 7, 100, width)
-        ],
-      )
-      
+      body: Form(
+        key: _formKey,
+        child: Container(
+          margin: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              !isMember
+                  ? TextFormField(
+                      key: ValueKey('name'),
+                      decoration:
+                          const InputDecoration(hintText: "Enter user name"),
+                      validator: (value) {
+                        if (value.toString().length < 3) {
+                          return ' User Name is so Small';
+                        } else
+                          return null;
+                      },
+                      onSaved: (value) {
+                        setState(() {
+                          userName = value!;
+                        });
+                      },
+                    )
+                  : Container(),
+              TextFormField(
+                key: const ValueKey('email'),
+                decoration: const InputDecoration(hintText: "Enter Email"),
+                validator: (value) {
+                  if (!(value.toString().contains('@'))) {
+                    return 'Invalid Email';
+                  } else
+                    return null;
+                },
+                onSaved: (value) {
+                  setState(() {
+                    email = value!;
+                  });
+                },
+              ),
+              TextFormField(
+                key: const ValueKey('password'),
+                obscureText: true,
+                decoration: const InputDecoration(hintText: "Enter pasword"),
+                validator: (value) {
+                  if (value.toString().length < 6) {
+                    return ' Password is so Small';
+                  } else
+                    return null;
+                },
+                onSaved: (value) {
+                  setState(() {
+                    password = value!;
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        isMember
+                            ? signIn(email, password)
+                            : signup(email, password);
+                      }
+                    },
+                    child: isMember ? Text('Login') : Text("Signup")),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      isMember = !isMember;
+                    });
+                  },
+                  child: isMember
+                      ? Text('Dont have an account? SignUp')
+                      : Text('Already Signed up? Login'))
+            ],
+          ),
+        ),
+      ),
     );
   }
-}
-
-Widget playingOption(String Id, int remaingUser, int totalUserAdded,
-    int MaxposibleGain, double width) {
-  return Container(
-    height: 100,
-    width: width,
-    decoration: BoxDecoration(
-        color: Colors.blue, borderRadius: BorderRadius.circular(10)),
-    child: Stack(
-      children: [
-        Positioned(
-          left: width*0.4,
-          top: 5,
-          child: Text(
-            Id,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          left: width*0.2,
-          top: 25,
-          child: Text(
-            '$remaingUser',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          left: width * 0.4,
-          top: 25,
-          child: Text(
-            '$MaxposibleGain',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          left: width*0.7,
-          top: 25,
-          child: Text(
-            '$totalUserAdded',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          left: width*0.8,
-          top: 30,
-          child: ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)))),
-              onPressed: () {},
-              child: Text('Goto')),
-        )
-      ],
-    ),
-  );
 }

@@ -1,6 +1,9 @@
 //import 'dart:ffi';
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:game/function/authfunction.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -9,152 +12,207 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late String _name;
+  bool isLogedIn = false;
+  String email = '';
+  String password = '';
+  String rePassword = '';
+  String userName = '';
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.grey,
-          body: Container(
-              color: Colors.white,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              margin: const EdgeInsets.fromLTRB(35, 40, 35, 40),
-              padding: const EdgeInsets.all(8.0),
+          backgroundColor: Colors.grey[300],
+          body: Form(
+            key: _formKey,
+            child: Container(
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
+              color: Colors.grey[100],
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 45.0,
-                  ),
-                  const Text(
-                    'Create Acount',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
+                  !isLogedIn
+                      ? const Text(
+                          'Create Acount',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        )
+                      : Column(
+                        children: [
+                          Image.asset('assets/day.png',
+                          height: 200,
+                          width: 300,),
+                          const Text(
+                              'Login to Your account',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                        ],
+                      ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Form(
-                      child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    verticalDirection: VerticalDirection.down,
-                    children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Full Name',
-                          prefixIcon: Icon(Icons.person),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                        ),
-                        maxLength: 30,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Some Text';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _name = value!;
-                        },
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Phone Number',
-                          prefixIcon: Icon(Icons.phone),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                        ),
-                        maxLength: 9,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Some Text';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _name = value!;
-                        },
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          suffixIcon: Icon(Icons.password),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Some Text';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _name = value!;
-                        },
-                      ),
-                      SizedBox(
-                        height: 14,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Confirm',
-                          suffixIcon: Icon(Icons.password),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Some Text';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _name = value!;
-                        },
-                      ),
-                      SizedBox(
-                        height: 14,
-                      ),
-                      OutlinedButton(
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30))),
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            padding: MaterialStateProperty.all(
-                                EdgeInsets.fromLTRB(120, 0, 120, 0)),
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black)),
-                        onPressed: () {
-                          _showDialog(context);
-                          if (_formKey.currentState!.validate()) {}
-                        },
-                        child: Text('Sign Up'),
-                      ),
-                    ],
-                  )),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                    child: Row(
-                      children: [
-                        Text('Already have Acount ?'),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/login');
-                            },
-                            child: Text('Sign In'))
-                      ],
+                  !isLogedIn
+                      ? TextFormField(
+                          key: const ValueKey('name'),
+                          decoration: InputDecoration(
+                            labelText: 'Full Name',
+                            prefixIcon: const Icon(Icons.person),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                          ),
+                          maxLength: 30,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please Enter User Name';
+                            } else if (value.toString().length < 3) {
+                              return 'User Name is to Small';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onSaved: (value) {
+                            setState(() {
+                              userName = value!;
+                            });
+                          },
+                        )
+                      : Container(),
+                  TextFormField(
+                    key: const ValueKey('email'),
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      prefixIcon: const Icon(Icons.email),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30)),
                     ),
-                  )
+                   
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please Enter Your Email';
+                      } else if (!(value.toString().contains('@'))) {
+                        return 'Invalid Email';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (value) {
+                      setState(() {
+                        email = value!;
+                      });
+                    },
+                  ),
+                 const SizedBox(height: 15,),
+                  TextFormField(
+                    key: const ValueKey('password'),
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      suffixIcon: const Icon(Icons.remove_red_eye),
+                      prefixIcon: const Icon(Icons.lock),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please Enter Password';
+                      } else if (value.toString().length < 6) {
+                        return 'password is so small';
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (value) {
+                      setState(() {
+                        password = value!;
+                      });
+                    },
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  !isLogedIn
+                      ? TextFormField(
+                          key: const ValueKey('rePassword'),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: 'Confirm',
+                            suffixIcon: const Icon(Icons.remove_red_eye),
+                            prefixIcon: const Icon(Icons.lock),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please Confirm password';
+                            } else if (password != rePassword) {
+                              return 'please confirm correct password';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            setState(() {
+                              rePassword = value!;
+                            });
+                          },
+                        )
+                      : Container(),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  OutlinedButton(
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30))),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.fromLTRB(120, 0, 120, 0)),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.black)),
+                    onPressed: () {
+                      //_showDialog(context);
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        isLogedIn
+                            ? signIn(email, password)
+                            : signup(email, password);
+                      }
+                    },
+                    child:
+                        isLogedIn ? const Text('LogIn') : const Text('SignUp'),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        setState(() {
+                          isLogedIn = !isLogedIn;
+                        });
+                        // Navigator.pushNamed(context, '/login');
+                      },
+                      child: isLogedIn
+                          ? const Text('Dont have an account? SignUp',
+                          style: TextStyle(color: Color.fromARGB(255, 61, 11, 243),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),)
+                          : const Text('Already Signed up? Login',
+                             style: TextStyle(color: Color.fromARGB(255, 61, 11, 243),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),))
                 ],
-              ))),
+              ),
+            ),
+          )),
     );
   }
 }
