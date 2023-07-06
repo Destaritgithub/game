@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:game/component/feed.dart';
 import 'package:game/component/listof_games.dart';
-import 'package:marquee/marquee.dart';
 import 'package:game/component/navigation_drawor.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,32 +13,43 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.green[50],
       appBar: AppBar(
-        title: buildSearchField(),
-        centerTitle: true,
-        backgroundColor: Colors.grey[600],
+        title: const Text(
+          'Logo',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: const Color.fromARGB(217, 180, 192, 190),
         elevation: 0.0,
         actions: [
           ButtonBar(
             children: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register');
-                  },
-                  child: Text(
-                    'Register',
-                    style: TextStyle(
-                      color: Colors.blue[900],
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ))
+              StreamBuilder(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return const Text('Balance');
+                  } else {
+                    return TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/register');
+                        },
+                        child: Text(
+                          'Register',
+                          style: TextStyle(
+                            color: Colors.blue[900],
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ));
+                  }
+                },
+              ),
             ],
           ),
-          Icon(Icons.notification_add_rounded),
+          const Icon(Icons.notification_add_rounded),
         ],
       ),
       drawer:Navigation_drawor(), 

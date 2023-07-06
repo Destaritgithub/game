@@ -6,7 +6,7 @@ import 'package:game/component/feed.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/exc',
+    initialRoute: '/',
     routes: {
       '/': (context) => Home(),
       '/register': (context) => Register(),
