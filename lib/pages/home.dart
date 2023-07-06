@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:game/component/feed.dart';
 import 'package:game/component/listof_games.dart';
-import 'package:marquee/marquee.dart';
 import 'package:game/component/navigation_drawor.dart';
+// ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
@@ -15,14 +14,15 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.green[50],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: buildSearchField(),
-        centerTitle: true,
-        backgroundColor: Colors.grey[600],
+        title: const Text(
+          'Logo',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: const Color.fromARGB(217, 180, 192, 190),
         elevation: 0.0,
         actions: [
           ButtonBar(
@@ -33,24 +33,45 @@ class _HomeState extends State<Home> {
                   if (snapshot.hasData) {
                     return const Text('Balance');
                   } else {
-                    return TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/register');
-                        },
-                        child: Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ));
+                    return Row(
+                      children: [
+                        TextButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.white)),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/register');
+                            },
+                            child: const Text(
+                              'Login',
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/register');
+                            },
+                            child: const Text(
+                              'Register',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                      ],
+                    );
                   }
                 },
               ),
             ],
           ),
-          const Icon(Icons.notification_add_rounded),
         ],
       ),
       drawer: Navigation_drawor(),
