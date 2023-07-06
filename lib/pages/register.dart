@@ -43,11 +43,13 @@ class _RegisterState extends State<Register> {
                           ),
                         )
                       : Column(
-                        children: [
-                          Image.asset('assets/day.png',
-                          height: 200,
-                          width: 300,),
-                          const Text(
+                          children: [
+                            Image.asset(
+                              'assets/img1.png',
+                              height: 200,
+                              width: 300,
+                            ),
+                            const Text(
                               'Login to Your account',
                               style: TextStyle(
                                 color: Colors.black,
@@ -55,8 +57,8 @@ class _RegisterState extends State<Register> {
                                 fontSize: 20,
                               ),
                             ),
-                        ],
-                      ),
+                          ],
+                        ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -94,7 +96,6 @@ class _RegisterState extends State<Register> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30)),
                     ),
-                   
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Your Email';
@@ -110,7 +111,9 @@ class _RegisterState extends State<Register> {
                       });
                     },
                   ),
-                 const SizedBox(height: 15,),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   TextFormField(
                     key: const ValueKey('password'),
                     obscureText: true,
@@ -201,14 +204,20 @@ class _RegisterState extends State<Register> {
                         // Navigator.pushNamed(context, '/login');
                       },
                       child: isLogedIn
-                          ? const Text('Dont have an account? SignUp',
-                          style: TextStyle(color: Color.fromARGB(255, 61, 11, 243),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),)
-                          : const Text('Already Signed up? Login',
-                             style: TextStyle(color: Color.fromARGB(255, 61, 11, 243),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),))
+                          ? const Text(
+                              'Dont have an account? SignUp',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 61, 11, 243),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          : const Text(
+                              'Already Signed up? Login',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 61, 11, 243),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ))
                 ],
               ),
             ),

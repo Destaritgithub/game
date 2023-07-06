@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:game/function/authfunction.dart';
+import 'package:game/function/databaseFunction.dart';
 
 class Exc extends StatefulWidget {
   @override
@@ -87,12 +88,19 @@ class _ExcState extends State<Exc> {
                 height: 50,
                 child: ElevatedButton(
                     onPressed: () {
+                      
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
+                        createUser('User', 'User1', userName, 100);
                         isMember
                             ? signIn(email, password)
                             : signup(email, password);
+                          
+                           
                       }
+                       
+                        
+                      
                     },
                     child: isMember ? Text('Login') : Text("Signup")),
               ),

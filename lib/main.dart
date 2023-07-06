@@ -14,7 +14,7 @@ void main() async {
   );
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/register',
+    initialRoute: '/exc',
     routes: {
       '/': (context) => Home(),
       '/register': (context) => Register(),

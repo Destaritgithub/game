@@ -3,6 +3,7 @@ import 'package:game/component/feed.dart';
 import 'package:game/component/listof_games.dart';
 import 'package:marquee/marquee.dart';
 import 'package:game/component/navigation_drawor.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -26,21 +27,30 @@ class _HomeState extends State<Home> {
         actions: [
           ButtonBar(
             children: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register');
-                  },
-                  child: Text(
-                    'Register',
-                    style: TextStyle(
-                      color: Colors.blue[900],
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ))
+              StreamBuilder(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return const Text('Balance');
+                  } else {
+                    return TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/register');
+                        },
+                        child: Text(
+                          'Register',
+                          style: TextStyle(
+                            color: Colors.blue[900],
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ));
+                  }
+                },
+              ),
             ],
           ),
-          Icon(Icons.notification_add_rounded),
+          const Icon(Icons.notification_add_rounded),
         ],
       ),
       drawer: Navigation_drawor(),
@@ -62,8 +72,7 @@ class _HomeState extends State<Home> {
               size: 30,
               color: Colors.white,
             ),
-          )
-          ),
+          )),
     );
   }
 }

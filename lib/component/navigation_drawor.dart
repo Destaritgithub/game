@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game/component/feed.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Navigation_drawor extends StatelessWidget {
   @override
@@ -19,10 +20,10 @@ class Navigation_drawor extends StatelessWidget {
             Container(
               color: Colors.white,
               height: MediaQuery.of(context).size.height,
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 children: [
-                  Divider(color: Colors.white70),
+                 const  Divider(color: Colors.white70),
                   const SizedBox(
                     height: 10,
                   ),
@@ -59,8 +60,8 @@ class Navigation_drawor extends StatelessWidget {
                   buildMenuItem(
                       text: 'Log Out',
                       icon: Icons.logout,
-                      onClicked: () {
-                        selectedItem(context, 4);
+                      onClicked: () async {
+                       await FirebaseAuth.instance.signOut();
                       }),
                 ],
               ),
@@ -81,27 +82,27 @@ Widget buildHeader({
     InkWell(
       onTap: onClicked,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 40),
+        padding: const EdgeInsets.symmetric(vertical: 40),
         child: Row(
           children: [
             CircleAvatar(radius: 30, backgroundImage: AssetImage(urlImage)),
-            SizedBox(width: 20),
+           const  SizedBox(width: 20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   name,
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  style: const TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   email,
-                  style: TextStyle(fontSize: 14, color: Colors.white),
+                  style:const TextStyle(fontSize: 14, color: Colors.white),
                 ),
               ],
             ),
-            Spacer(),
-            CircleAvatar(
+          const  Spacer(),
+          const  CircleAvatar(
               radius: 24,
               backgroundColor: Color.fromRGBO(30, 60, 168, 1),
               child: Icon(Icons.add_comment_outlined, color: Colors.white),
@@ -116,14 +117,14 @@ Widget buildMenuItem({
   required IconData icon,
   VoidCallback? onClicked,
 }) {
-  final color = Colors.black;
-  final hoverColor = Colors.white70;
+  const color = Colors.black;
+  const  hoverColor = Colors.white70;
 
   return ListTile(
     leading:
         Icon(icon, color: Colors.grey[700], size: 25, weight: Checkbox.width),
     title: Text(text,
-        style: TextStyle(
+        style: const TextStyle(
           color: color,
           letterSpacing: 2.0,
           fontWeight: FontWeight.bold,
@@ -140,25 +141,26 @@ void selectedItem(BuildContext context, int index) {
   switch (index) {
     case 0:
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Feed(),
+        builder: (context) => const Feed(),
       ));
       break;
     case 1:
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Feed(),
+        builder: (context) => const Feed(),
       ));
       case 2:
       Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Feed(),
+            builder: (context) => const Feed(),
           ));
           case 3:
           Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Feed(),
+        builder: (context) => const Feed(),
       ));
       case 4:
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Feed(),
-      ));
+        builder: (context) => const Feed(),
+      )
+      );
       break;
   }
 }
