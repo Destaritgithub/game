@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:game/component/feed.dart';
+// ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Navigation_drawor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      
       child: Material(
-        color: Colors.grey,
+        color: const Color.fromARGB(217, 180, 192, 190),
         child: ListView(
           children: [
             buildHeader(

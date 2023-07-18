@@ -45,7 +45,7 @@ class _RegisterState extends State<Register> {
                       : Column(
                           children: [
                             Image.asset(
-                              'assets/img1.png',
+                              'assets/img1.jpg',
                               height: 200,
                               width: 300,
                             ),

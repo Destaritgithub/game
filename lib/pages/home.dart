@@ -18,9 +18,15 @@ class _HomeState extends State<Home> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.black, // set the color of the icon
+          size: 50.0, // set the size of the icon
+        ),
         title: const Text(
           'Logo',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black,
+           fontWeight: FontWeight.w900,
+          fontSize: 24),
         ),
         backgroundColor: const Color.fromARGB(217, 180, 192, 190),
         elevation: 0.0,
@@ -31,7 +37,72 @@ class _HomeState extends State<Home> {
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return const Text('Balance');
+                    return  Row(
+                      children: [
+                       const Column(
+                          children: [
+                            Text('Alemu' ,
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 35, 34, 34),
+                              fontWeight: FontWeight.bold
+                            ),
+                            ),
+                            Row(
+                              
+                              children: [
+                                Text('****',
+                                style: TextStyle(
+                                      color: Color.fromARGB(255, 35, 34, 34),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(Icons.visibility_off,
+                                size: 20),
+                              ],
+                            )
+                          ],
+                        ),
+                        const SizedBox(width: 4,),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.grey),
+                            minimumSize: MaterialStateProperty.all(const Size(20, 24))
+                          ),
+                          onPressed: (){
+
+                        }, child: const Text('Deposit')),
+                        Container(
+                          child:  Stack(
+                            children: [
+                             const Positioned(
+                                right: 5,
+                                top: 6,
+                                child: Text('2',
+                                style: TextStyle(
+                                  color: Colors.red
+                                ),
+                                )),
+                                IconButton(
+                                  iconSize: 30.0,
+                                  onPressed: (){
+
+                                }, icon: const Icon(Icons.notifications,
+                              color: Colors.white,
+                              size: 40,))
+                              
+                              
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          iconSize: 30.0,
+                          onPressed: (){
+
+                        }, icon: const Icon(Icons.person,
+                        size: 30,
+                        
+                        ))
+                      ],
+                    );
                   } else {
                     return Row(
                       children: [
@@ -51,9 +122,12 @@ class _HomeState extends State<Home> {
                               ),
                             )),
                         const SizedBox(
-                          width: 10,
+                          width: 20,
                         ),
                         ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(const Color.fromARGB(255, 138, 116, 250))),
                             onPressed: () {
                               Navigator.pushNamed(context, '/register');
                             },

@@ -1,86 +1,65 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
+import 'package:game/component/advert.dart';
+import 'package:game/provider/ticket_provider.dart';
 import 'package:marquee/marquee.dart';
 import 'package:game/data.dart';
+import 'package:provider/provider.dart';
 
+// ignore: use_key_in_widget_constructors
 class Listt extends StatefulWidget {
   @override
   State<Listt> createState() => _ListtState();
 }
 
 class _ListtState extends State<Listt> {
-  List<Game> game1 = [
-    Game(
-        TicketId: 'Ticket number one',
-        numberOfPayer: 4,
-        numberOfRemainigpayers: 6,
-        posibleAmountOfWin: 100),
-  ];
+  get ticketData => null;
+
   @override
   Widget build(BuildContext context) {
+    final myTicket = context.watch<TicketProvider>().ticket;
     double screenWidth = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-              width: screenWidth,
-              height: 60,
-              padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Colors.black, borderRadius: BorderRadius.circular(60)),
-              child: Marquee(
-                text: 'winers here',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  decorationColor: Colors.white,
-                ),
-                scrollAxis: Axis.horizontal,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                blankSpace: 20.0,
-                velocity: 100.0,
-                pauseAfterRound: Duration(seconds: 1),
-                startPadding: 10.0,
-                accelerationDuration: Duration(seconds: 1),
-                accelerationCurve: Curves.linear,
-                decelerationDuration: Duration(milliseconds: 500),
-                decelerationCurve: Curves.easeOut,
-              )),
-          playingOption('first one', 3, 7, 100, screenWidth),
-          SizedBox(
-            height: 2,
+            width: screenWidth,
+            margin: const EdgeInsets.only(top: 1, bottom: 1),
+            height: 65,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: const Color.fromARGB(217, 180, 192, 190),
+            ),
+            child: const Advert(),
           ),
-          playingOption('first one', 3, 7, 100, screenWidth),
-            SizedBox(
-            height: 2,
+          
+          playingOption(
+              'Class Id', 'Ticketd', 'Statment', 3, 7, 100, 10, screenWidth),
+          const SizedBox(
+            height: 1,
           ),
-          playingOption('first one', 3, 7, 100, screenWidth),
-          SizedBox(
-            height: 2,
+          playingOption(
+              'ClassId', 'Ticketd', 'Statment', 3, 7, 100, 10, screenWidth),
+          const SizedBox(
+            height: 1,
           ),
-          playingOption('first one', 3, 7, 100, screenWidth),
-            SizedBox(
-            height: 2,
+          playingOption(
+              'ClassId', 'Ticketd', 'Statment', 3, 7, 100, 10, screenWidth),
+          const SizedBox(
+            height: 1,
           ),
-          playingOption('first one', 3, 7, 100, screenWidth),
-          SizedBox(
-            height: 2,
+          playingOption(
+              'ClassId', 'Ticketd', 'Statment', 3, 7, 100, 10, screenWidth),
+          const SizedBox(
+            height: 1,
           ),
-          playingOption('first one', 3, 7, 100, screenWidth),
-          SizedBox(
-            height: 2,
-          ),
-          playingOption('first one', 3, 7, 100, screenWidth),
-          SizedBox(
-            height: 2,
-          ),
-          SizedBox(
-            height: 2,
-          ),
-          playingOption('first one', 3, 7, 100, screenWidth),
-          SizedBox(
-            height: 2,
+          playingOption(
+              'ClassId', 'Ticketd', 'Statment', 3, 7, 100, 10, screenWidth),
+          const SizedBox(
+            height: 1,
           ),
         ],
       ),
@@ -88,69 +67,100 @@ class _ListtState extends State<Listt> {
   }
 }
 
-Widget playingOption(String Id, int remaingUser, int totalUserAdded,
-    int MaxposibleGain, double width) {
+Widget playingOption(
+    String ClassId,
+    String Ticketd,
+    String Statment,
+    int remaingUser,
+    int totalUserAdded,
+    int MaxposibleGain,
+    int price,
+    double width) {
   return Container(
     height: 100,
     width: width,
     decoration: BoxDecoration(
-        color: Colors.grey, borderRadius: BorderRadius.circular(10)),
+      borderRadius: BorderRadius.circular(10),
+      color: const Color.fromARGB(218, 223, 231, 229),
+    ),
     child: Stack(
       children: [
         Positioned(
-          left: width * 0.4,
-          top: 5,
+          left: 20,
+          top: 2,
           child: Text(
-            Id,
+            ClassId,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
         Positioned(
-          left: width * 0.2,
-          top: 25,
+          left: 10,
+          top: 30,
+          child: Text(
+            'be${price}bra$MaxposibleGain${remaingUser}yekerew',
+            style: const TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ),
+        Positioned(
+          left: 210,
+          top: 2,
           child: Text(
             '$remaingUser',
             style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.red),
           ),
         ),
         Positioned(
-          left: width * 0.4,
-          top: 25,
+          left: 330,
+          top: 3,
           child: Text(
-            '$MaxposibleGain',
+            Ticketd,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
         Positioned(
-          left: width * 0.7,
-          top: 25,
+          left: 210,
+          top: 24,
           child: Text(
             '$totalUserAdded',
             style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontSize: 18,
             ),
           ),
         ),
         Positioned(
-          left: width * 0.8,
-          top: 30,
+          left: 330,
+          top: 24,
+          child: TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+              ),
+              onPressed: () {},
+              child: const Text('New')),
+        ),
+        Positioned(
+          left: 180,
+          bottom: 0,
           child: ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)))),
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0),
+                )),
+              ),
               onPressed: () {},
-              child: Text('Goto')),
+              child: const Text(
+                'Goto',
+                style: TextStyle(color: Color.fromARGB(255, 6, 197, 86)),
+              )),
         )
       ],
     ),
